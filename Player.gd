@@ -5,18 +5,53 @@ var velocity = Vector2.ZERO
 export(int) var ACCELERATION = 5000
 export(float) var FRICTION = 0.9
 export(int) var MAX_SPEED = 1000
+export(int) var DASH_SPEED = 2000
+export(float) var DASH_TIME = 1.5
+
+var dashing = false
+
+onready var aTree = $AnimationTree
+onready var state = aTree["parameters/playback"]
+
+func _ready():
+	aTree.active = true
 
 func _process(delta):
+	if(!dashing):
+		_move(delta)
+	else:
+		_dash(delta)
+	
+func _move(delta):
+	
+	if(Input.is_action_just_pressed("dash")):
+		dashing = true
+		$DashTimer.start(DASH_TIME)
+	
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength("game_right") - Input.get_action_strength("game_left")
 	input_vector.y = Input.get_action_strength("game_down") - Input.get_action_strength("game_up")
 	input_vector.normalized()
 	
 	if(input_vector != Vector2.ZERO):
+		state.travel("Run")
+		aTree.set("parameters/Idle/blend_position", input_vector)
+		aTree.set("parameters/Run/blend_position", input_vector)
 		velocity += input_vector * ACCELERATION * delta
 		velocity.clamped(MAX_SPEED)
 	else:
-		pass
+		state.travel("Idle")
 	velocity *= FRICTION
 	
 	velocity = move_and_slide(velocity)
+
+func _dash(delta):
+	var old_vel = velocity
+	velocity.normalized()
+	var input_vector = velocity
+	velocity = old_vel
+	input_vector *= DASH_SPEED
+	move_and_slide(input_vector * delta)
+
+func _on_DashTimer_timeout():
+	dashing = false
