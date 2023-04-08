@@ -21,7 +21,7 @@ tile_data = PoolIntArray( -196606, 1, 0, -131070, 1, 0, -65534, 1, 0, 2, 1, 0, 6
 position = Vector2( 114, 61 )
 ACCELERATION = 1000
 MAX_SPEED = 200
-DASH_SPEED = 400
+DASH_SPEED = 750
 DASH_TIME = 0.25
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]

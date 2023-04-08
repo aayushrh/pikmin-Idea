@@ -9,8 +9,9 @@ export(int) var DASH_SPEED = 2000
 export(float) var DASH_TIME = 1.5
 export(float) var DASH_COOLDOWN = 1
 
-var dashing = false
 var can_dash = true
+
+var playerState = "Move"
 
 onready var Bullet = preload("res://Player//Bullet.tscn")
 
@@ -19,26 +20,42 @@ onready var state = aTree["parameters/playback"]
 
 func _ready():
 	aTree.active = true
+	#state.travel("Attack")
+	#playerState = "Attack"
 
 func _process(delta):
 	if(Input.is_action_just_pressed("shoot")):
 		var vector = get_global_mouse_position() - global_position
-		vector.normalized()
+		vector = vector.normalized()
 		var bullet = Bullet.instance()
 		bullet.global_position = global_position
 		bullet.direction = vector
 		get_tree().current_scene.add_child(bullet)
-	if(!dashing):
+	if(playerState == "Move"):
 		_move(delta)
-	else:
+	elif (playerState == "Dash"):
 		_dash(delta)
+	elif (playerState == "Attack"):
+		_attack()
 	
+func _attack():
+	state.travel("Attack")
+
 func _move(delta):
+	var vector = get_global_mouse_position() - global_position
+	vector = vector.normalized()
+	aTree.set("parameters/Attack/blend_position", vector)
+	
+	if(Input.is_action_just_pressed("attack")):
+		state.travel("Attack")
+		playerState = "Attack"
+		$SwordTimer.start(0.5)
 	
 	if(Input.is_action_just_pressed("dash") and can_dash):
-		dashing = true
+		playerState = "Dash"
 		can_dash = false
 		$DashTimer.start(DASH_TIME)
+		$DashCooldown.start(DASH_COOLDOWN)
 	
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength("game_right") - Input.get_action_strength("game_left")
@@ -58,16 +75,15 @@ func _move(delta):
 	velocity = move_and_slide(velocity)
 
 func _dash(delta):
-	var old_vel = velocity
-	velocity.normalized()
-	var input_vector = velocity
-	velocity = old_vel
-	input_vector *= DASH_SPEED
+	var input_vector = velocity.normalized()
+	input_vector *= DASH_SPEED * 100
 	move_and_slide(input_vector * delta)
 
 func _on_DashTimer_timeout():
-	dashing = false
-	$DashCooldown.start(DASH_COOLDOWN)
+	playerState = "Move"
 
 func _on_DashCooldown_timeout():
 	can_dash = true
+
+func _on_SwordTimer_timeout():
+	playerState = "Move"
