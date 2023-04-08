@@ -49,7 +49,7 @@ func _move(delta):
 	if(Input.is_action_just_pressed("attack")):
 		state.travel("Attack")
 		playerState = "Attack"
-		$SwordTimer.start(0.5)
+		$SwordTimer.start(0.6)
 	
 	if(Input.is_action_just_pressed("dash") and can_dash):
 		playerState = "Dash"
