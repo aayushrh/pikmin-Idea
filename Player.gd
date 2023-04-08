@@ -7,8 +7,12 @@ export(float) var FRICTION = 0.9
 export(int) var MAX_SPEED = 1000
 export(int) var DASH_SPEED = 2000
 export(float) var DASH_TIME = 1.5
+export(float) var DASH_COOLDOWN = 1
 
 var dashing = false
+var can_dash = true
+
+onready var Bullet = preload("res://Player//Bullet.tscn")
 
 onready var aTree = $AnimationTree
 onready var state = aTree["parameters/playback"]
@@ -17,6 +21,13 @@ func _ready():
 	aTree.active = true
 
 func _process(delta):
+	if(Input.is_action_just_pressed("shoot")):
+		var vector = get_global_mouse_position() - global_position
+		vector.normalized()
+		var bullet = Bullet.instance()
+		bullet.global_position = global_position
+		bullet.direction = vector
+		get_tree().current_scene.add_child(bullet)
 	if(!dashing):
 		_move(delta)
 	else:
@@ -24,8 +35,9 @@ func _process(delta):
 	
 func _move(delta):
 	
-	if(Input.is_action_just_pressed("dash")):
+	if(Input.is_action_just_pressed("dash") and can_dash):
 		dashing = true
+		can_dash = false
 		$DashTimer.start(DASH_TIME)
 	
 	var input_vector = Vector2.ZERO
@@ -55,3 +67,7 @@ func _dash(delta):
 
 func _on_DashTimer_timeout():
 	dashing = false
+	$DashCooldown.start(DASH_COOLDOWN)
+
+func _on_DashCooldown_timeout():
+	can_dash = true

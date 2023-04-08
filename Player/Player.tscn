@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://Art/Champions/Arthax.png" type="Texture" id=2]
@@ -210,6 +210,10 @@ start_node = "Idle"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=22]
 
+[sub_resource type="CapsuleShape2D" id=23]
+radius = 4.01399
+height = 3.94196
+
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
 
@@ -218,9 +222,6 @@ texture = ExtResource( 2 )
 hframes = 5
 vframes = 8
 frame = 5
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( -7, 8, -4, 8, -4, 7, 6, 7, 6, 5, 7, 5, 7, 1, 6, 1, 6, 0, 5, 0, 5, -3, 4, -3, 4, -4, 3, -4, 3, -5, 2, -5, 2, -6, -2, -6, -2, -5, -3, -5, -3, -4, -4, -4, -4, -3, -5, -3, -5, 0, -6, 0, -6, 1, -7, 1, -7, 3, -8, 3, -8, 7, -7, 7 )
 
 [node name="DashTimer" type="Timer" parent="."]
 
@@ -242,4 +243,12 @@ parameters/playback = SubResource( 22 )
 parameters/Idle/blend_position = Vector2( 0.00125623, -0.971429 )
 parameters/Run/blend_position = Vector2( 0, 0 )
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 1.49012e-08, 4 )
+rotation = 1.62567
+shape = SubResource( 23 )
+
+[node name="DashCooldown" type="Timer" parent="."]
+
 [connection signal="timeout" from="DashTimer" to="." method="_on_DashTimer_timeout"]
+[connection signal="timeout" from="DashCooldown" to="." method="_on_DashCooldown_timeout"]
