@@ -2,11 +2,8 @@
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://World/TileSet.tres" type="TileSet" id=2]
-<<<<<<< HEAD
 [ext_resource path="res://Enemy.tscn" type="PackedScene" id=3]
-=======
-[ext_resource path="res://World/Camera2D.gd" type="Script" id=3]
->>>>>>> 743369c02eb250c3b8fd640198d1a115cd70b0a4
+; [ext_resource path="res://World/Camera2D.gd" type="Script" id=3]
 
 [node name="World" type="Node2D"]
 
