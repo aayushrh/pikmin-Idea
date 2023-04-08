@@ -54,7 +54,7 @@ func _move(delta):
 	if(Input.is_action_just_pressed("dash") and can_dash):
 		playerState = "Dash"
 		can_dash = false
-		$DashTimer.start(DASH_TIME)
+		$DashTimer.start(DASH_TIME/100)
 		$DashCooldown.start(DASH_COOLDOWN)
 	
 	var input_vector = Vector2.ZERO
