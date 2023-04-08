@@ -49,7 +49,14 @@ func _move(delta):
 	if(Input.is_action_just_pressed("attack")):
 		state.travel("Attack")
 		playerState = "Attack"
+<<<<<<< HEAD
+		#var timer = Timer.new()
+		#timer.connect("timeout", self, "_on_SwordTimer_timeout")
+		#timer.start(0.6)
+		$SwordTimer.start(0.5)
+=======
 		$SwordTimer.start(0.6)
+>>>>>>> 743369c02eb250c3b8fd640198d1a115cd70b0a4
 	
 	if(Input.is_action_just_pressed("dash") and can_dash):
 		playerState = "Dash"

@@ -1,9 +1,9 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=37 format=2]
 
-[ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://Enemy.gd" type="Script" id=1]
 [ext_resource path="res://Art/Champions/Arthax.png" type="Texture" id=2]
 
-[sub_resource type="Animation" id=24]
+[sub_resource type="Animation" id=37]
 resource_name = "Attack_Down"
 length = 0.5
 tracks/0/type = "value"
@@ -43,7 +43,7 @@ tracks/2/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=27]
+[sub_resource type="Animation" id=38]
 resource_name = "Attack_Left"
 length = 0.5
 tracks/0/type = "value"
@@ -83,7 +83,7 @@ tracks/2/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=26]
+[sub_resource type="Animation" id=39]
 resource_name = "Attack_Right"
 length = 0.5
 tracks/0/type = "value"
@@ -123,7 +123,7 @@ tracks/2/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=25]
+[sub_resource type="Animation" id=40]
 resource_name = "Attack_Up"
 length = 0.5
 tracks/0/type = "value"
@@ -163,7 +163,7 @@ tracks/2/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id=41]
 resource_name = "Idle_Down"
 length = 0.1
 loop = true
@@ -180,7 +180,7 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=42]
 resource_name = "Idle_Left"
 length = 0.1
 loop = true
@@ -197,7 +197,7 @@ tracks/0/keys = {
 "values": [ 15 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=43]
 resource_name = "Idle_Right"
 length = 0.1
 loop = true
@@ -214,7 +214,7 @@ tracks/0/keys = {
 "values": [ 10 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=44]
 resource_name = "Idle_Up"
 length = 0.1
 loop = true
@@ -231,7 +231,7 @@ tracks/0/keys = {
 "values": [ 5 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=45]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -270,7 +270,7 @@ tracks/2/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=46]
 resource_name = "Run_Down"
 length = 0.5
 loop = true
@@ -287,7 +287,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=47]
 resource_name = "Run_Left"
 length = 0.5
 loop = true
@@ -304,7 +304,7 @@ tracks/0/keys = {
 "values": [ 15, 16, 17, 18, 19 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=48]
 resource_name = "Run_Right"
 length = 0.5
 loop = true
@@ -321,7 +321,7 @@ tracks/0/keys = {
 "values": [ 10, 11, 12, 13, 14 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=49]
 resource_name = "Run_Up"
 length = 0.5
 loop = true
@@ -409,35 +409,26 @@ blend_point_3/pos = Vector2( 1, 0 )
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=34]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=35]
+
 [sub_resource type="AnimationNodeStateMachineTransition" id=36]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=62]
-switch_mode = 2
-
-[sub_resource type="AnimationNodeStateMachine" id=21]
+[sub_resource type="AnimationNodeStateMachine" id=62]
 states/Attack/node = SubResource( 33 )
 states/Attack/position = Vector2( 249.5, 143 )
 states/Idle/node = SubResource( 14 )
 states/Idle/position = Vector2( 224.5, 74.5 )
 states/Run/node = SubResource( 19 )
 states/Run/position = Vector2( 374, 84 )
-transitions = [ "Idle", "Run", SubResource( 20 ), "Run", "Idle", SubResource( 34 ), "Idle", "Attack", SubResource( 36 ), "Attack", "Idle", SubResource( 62 ) ]
+transitions = [ "Idle", "Run", SubResource( 20 ), "Run", "Idle", SubResource( 34 ), "Attack", "Idle", SubResource( 35 ), "Idle", "Attack", SubResource( 36 ) ]
 start_node = "Idle"
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=22]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=63]
 
-[sub_resource type="CapsuleShape2D" id=23]
-radius = 4.01399
-height = 3.94196
-
-[sub_resource type="CapsuleShape2D" id=28]
-radius = 3.99951
-height = 13.9983
-
-[node name="Player" type="KinematicBody2D"]
-collision_layer = 3
-collision_mask = 2
+[node name="Enemy" type="KinematicBody2D"]
 script = ExtResource( 1 )
+ACCELERATION = 400
+MAX_SPEED = 400
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
@@ -445,53 +436,38 @@ hframes = 5
 vframes = 8
 frame = 5
 
-[node name="DashTimer" type="Timer" parent="."]
+[node name="Pivot" type="Position2D" parent="."]
+
+[node name="Vision" type="Area2D" parent="Pivot"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Pivot/Vision"]
+polygon = PoolVector2Array( -5, -4, 6, -4, 46, -114, -47, -114 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Attack_Down = SubResource( 24 )
-anims/Attack_Left = SubResource( 27 )
-anims/Attack_Right = SubResource( 26 )
-anims/Attack_Up = SubResource( 25 )
-anims/Idle_Down = SubResource( 1 )
-anims/Idle_Left = SubResource( 2 )
-anims/Idle_Right = SubResource( 3 )
-anims/Idle_Up = SubResource( 4 )
-anims/RESET = SubResource( 5 )
-anims/Run_Down = SubResource( 6 )
-anims/Run_Left = SubResource( 8 )
-anims/Run_Right = SubResource( 9 )
-anims/Run_Up = SubResource( 7 )
+anims/Attack_Down = SubResource( 37 )
+anims/Attack_Left = SubResource( 38 )
+anims/Attack_Right = SubResource( 39 )
+anims/Attack_Up = SubResource( 40 )
+anims/Idle_Down = SubResource( 41 )
+anims/Idle_Left = SubResource( 42 )
+anims/Idle_Right = SubResource( 43 )
+anims/Idle_Up = SubResource( 44 )
+anims/RESET = SubResource( 45 )
+anims/Run_Down = SubResource( 46 )
+anims/Run_Left = SubResource( 47 )
+anims/Run_Right = SubResource( 48 )
+anims/Run_Up = SubResource( 49 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource( 21 )
+tree_root = SubResource( 62 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
-parameters/playback = SubResource( 22 )
+parameters/playback = SubResource( 63 )
 parameters/Attack/blend_position = Vector2( 0, -1 )
 parameters/Idle/blend_position = Vector2( -1, 0 )
 parameters/Run/blend_position = Vector2( 0, 0 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 1.49012e-08, 4 )
-rotation = 1.62567
-shape = SubResource( 23 )
-
-[node name="DashCooldown" type="Timer" parent="."]
-one_shot = true
-
-[node name="Pivot" type="Position2D" parent="."]
-
-[node name="Hitbox" type="Area2D" parent="Pivot"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Hitbox"]
-position = Vector2( 0, 9 )
-rotation = 1.5708
-shape = SubResource( 28 )
-
-[node name="SwordTimer" type="Timer" parent="."]
-one_shot = true
-
-[connection signal="timeout" from="DashTimer" to="." method="_on_DashTimer_timeout"]
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
-[connection signal="timeout" from="DashCooldown" to="." method="_on_DashCooldown_timeout"]
-[connection signal="timeout" from="SwordTimer" to="." method="_on_SwordTimer_timeout"]
+[connection signal="body_entered" from="Pivot/Vision" to="." method="_on_Vision_body_entered"]
+[connection signal="body_exited" from="Pivot/Vision" to="." method="_on_Vision_body_exited"]
