@@ -27,6 +27,7 @@ onready var state = aTree["parameters/playback"]
 
 func _ready():
 	aTree.active = true
+	$Pivot/Hitbox/CollisionShape2D.disabled = true
 
 func _process(delta):
 	if(Input.is_action_just_pressed("shoot")):
