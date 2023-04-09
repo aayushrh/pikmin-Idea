@@ -61,13 +61,16 @@ func _move(delta):
 		#timer.start(0.6)
 		$SwordTimer.start(0.5)
 	
-	if(Input.is_action_just_pressed("dash") and can_dash and abs(velocity.y) > 0.1 ):
+	if(Input.is_action_just_pressed("dash") and can_dash):
 		playerState = "Dash"
 		can_dash = false
 		$DashTimer.start(DASH_TIME/100)
 		$DashCooldown.start(DASH_COOLDOWN)
-	elif(Input.is_action_just_pressed("dash") and can_dash and abs(velocity.y) <= 0.1):
-		velocity.y -= JUMP
+	
+	if (abs(velocity.y) <= 0.1):
+		can_dash = true
+		if(Input.is_action_just_pressed("jump")):
+			velocity.y -= JUMP
 	
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength("game_right") - Input.get_action_strength("game_left")
@@ -90,15 +93,19 @@ func _move(delta):
 
 func _dash(delta):
 	state.travel("Dash")
-	var input_vector = (get_global_mouse_position() - global_position).normalized()
-	input_vector *= DASH_SPEED * 100
+	var dir = 0
+	#var input_vector = (get_global_mouse_position() - global_position).normalized()
+	var input_vector = Vector2(1,0)
+	if (velocity.x >= 0):
+		dir = 1
+	else:
+		dir = -1
+	input_vector *= DASH_SPEED * 100 * dir
 	move_and_slide(input_vector * delta)
 
 func _on_DashTimer_timeout():
 	playerState = "Move"
 
-func _on_DashCooldown_timeout():
-	can_dash = true
 
 func _on_SwordTimer_timeout():
 	playerState = "Move"
