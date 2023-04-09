@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://Art/Ball and Chain Bot/hit.png" type="Texture" id=1]
 [ext_resource path="res://Enemies/BallChainBot.gd" type="Script" id=2]
@@ -101,7 +101,7 @@ animations = [ {
 "frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ) ],
 "loop": true,
 "name": "death",
-"speed": 12.0
+"speed": 8.0
 }, {
 "frames": [ SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ) ],
 "loop": true,
@@ -119,13 +119,15 @@ radius = 251.127
 [sub_resource type="RectangleShape2D" id=108]
 extents = Vector2( 36, 12.5 )
 
-[node name="BallBhainBot" type="KinematicBody2D"]
+[sub_resource type="CircleShape2D" id=110]
+
+[node name="BallChainBot" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 109 )
-animation = "idle"
-frame = 1
+animation = "death"
+frame = 2
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -160,9 +162,20 @@ collision_mask = 0
 position = Vector2( 27, 4 )
 shape = SubResource( 108 )
 
+[node name="DeathTimer" type="Timer" parent="."]
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource( 110 )
+
 [connection signal="body_entered" from="Vision" to="." method="_on_Vision_body_entered"]
 [connection signal="body_entered" from="Attacking" to="." method="_on_Attacking_body_entered"]
 [connection signal="body_exited" from="Attacking" to="." method="_on_Attacking_body_exited"]
 [connection signal="timeout" from="Attack" to="." method="_on_Attack_timeout"]
 [connection signal="timeout" from="AttackCooldown" to="." method="_on_AttackCooldown_timeout"]
 [connection signal="body_entered" from="Attack2" to="." method="_on_Attack2_body_entered"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]
