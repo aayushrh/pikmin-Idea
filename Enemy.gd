@@ -11,8 +11,6 @@ export(int) var ACCELERATION = 5000
 export(float) var FRICTION = 0.9
 export(int) var MAX_SPEED = 1000
 
-onready var aTree = $AnimationTree
-onready var state = aTree["parameters/playback"]
 
 func _ready():
 	startingPoint = global_position
@@ -24,9 +22,7 @@ func _process(delta):
 		input_vector = input_vector.normalized()
 		
 		if(input_vector != Vector2.ZERO):
-			state.travel("Run")
-			aTree.set("parameters/Idle/blend_position", input_vector)
-			aTree.set("parameters/Run/blend_position", input_vector)
+			$AnimatedSprite.animation = "run"
 			velocity += input_vector * ACCELERATION * delta
 			velocity.clamped(MAX_SPEED)
 			
@@ -37,13 +33,16 @@ func _process(delta):
 		
 		var input = -(global_position - wanderPoint).normalized()
 		
-		state.travel("Run")
-		aTree.set("parameters/Idle/blend_position", input)
-		aTree.set("parameters/Run/blend_position", input)
+		$AnimatedSprite.animation = "run"
 		
 		velocity += input * ACCELERATION * delta
 		velocity.clamped(MAX_SPEED)
 		velocity *= FRICTION
+	
+	if velocity.x < 0:
+		scale.x =  -1
+	else:
+		scale.x = 1
 	
 	$Pivot.rotation_degrees = atan2(velocity.y, velocity.x) * 180/PI + 90
 	
