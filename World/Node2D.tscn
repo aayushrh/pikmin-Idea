@@ -18,12 +18,13 @@ tile_data = PoolIntArray( -9895921, 0, 0, -9895920, 0, 0, -9895919, 0, 0, -98959
 tile_set = ExtResource( 4 )
 cell_size = Vector2( 16, 16 )
 format = 1
+tile_data = PoolIntArray( -2293749, 1, 0, -2293748, 1, 0, -2293747, 1, 0, -2293746, 1, 0, -2293745, 1, 0, -2031599, 1, 0, -2031598, 1, 0, -2031597, 1, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 298, -525 )
 ACCELERATION = 1000
 MAX_SPEED = 100
-DASH_SPEED = 700
+DASH_SPEED = 2100
 DASH_TIME = 10.0
 DASH_COOLDOWN = 0.45
 

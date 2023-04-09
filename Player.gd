@@ -8,6 +8,8 @@ export(int) var MAX_SPEED = 1000
 export(int) var DASH_SPEED = 2000
 export(float) var DASH_TIME = 1.5
 export(float) var DASH_COOLDOWN = 1
+export(int) var GRAVITY = 9
+export(int) var JUMP = 350
 
 var can_dash = true
 
@@ -61,15 +63,17 @@ func _move(delta):
 		#timer.start(0.6)
 		$SwordTimer.start(0.5)
 	
-	if(Input.is_action_just_pressed("dash") and can_dash):
+	if(Input.is_action_just_pressed("dash") and can_dash and abs(velocity.y) > 0.1 ):
 		playerState = "Dash"
 		can_dash = false
 		$DashTimer.start(DASH_TIME/100)
 		$DashCooldown.start(DASH_COOLDOWN)
+	elif(Input.is_action_just_pressed("dash") and can_dash and abs(velocity.y) <= 0.1):
+		velocity.y -= JUMP
 	
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength("game_right") - Input.get_action_strength("game_left")
-	input_vector.y = Input.get_action_strength("game_down") - Input.get_action_strength("game_up")
+	#input_vector.y = Input.get_action_strength("game_down") - Input.get_action_strength("game_up")
 	input_vector.normalized()
 	
 	if(input_vector != Vector2.ZERO):
@@ -82,13 +86,13 @@ func _move(delta):
 		velocity *= speedMult
 	else:
 		state.travel("Idle")
-	velocity *= FRICTION
-	
+	velocity.x *= FRICTION
+	velocity.y += GRAVITY
 	velocity = move_and_slide(velocity)
 
 func _dash(delta):
 	state.travel("Dash")
-	var input_vector = velocity.normalized()
+	var input_vector = (get_global_mouse_position() - global_position).normalized()
 	input_vector *= DASH_SPEED * 100
 	move_and_slide(input_vector * delta)
 
