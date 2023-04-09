@@ -10,7 +10,9 @@ extends Node2D
 func _ready():
 	pass # Replace with function body.
 func _on_Area2D_body_entered(body):
-	body.queue_free()
+	# game over
+	SceneChanger.change_scene_to("res://StartScreen.tscn")
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
