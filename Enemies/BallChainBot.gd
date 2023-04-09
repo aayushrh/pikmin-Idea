@@ -11,13 +11,13 @@ export(int) var MAX_SPEED = 200
 export(int) var damage = 10
 
 func _ready():
-	$AnimatedSprite.set_animation("idle")
+	$Sprite.set_animation("idle")
 	$Attack2/CollisionShape2D2.disabled = true
 
 func _process(delta):
 	if(insideHit and cooldown):
 		velocity = Vector2.ZERO
-		$AnimatedSprite.set_animation("attack2")
+		$Sprite.set_animation("attack")
 		$Attack2/CollisionShape2D2.disabled = false
 		cooldown = false
 		$Attack.start(1)
@@ -31,13 +31,11 @@ func _process(delta):
 		velocity.clamped(MAX_SPEED)
 		velocity.x *= FRICTION
 		if(input_vector.x < 0):
-			$AnimatedSprite.flip_h = true
-			$AnimatedSprite.offset.x = 0
+			$Sprite.flip_h = true
 			$Attacking/CollisionShape2D.position.x = -27
 			$Attack2/CollisionShape2D2.position.x = -27
 		else:
-			$AnimatedSprite.flip_h = false
-			$AnimatedSprite.offset.x = 105
+			$Sprite.flip_h = false
 			$Attacking/CollisionShape2D.position.x = 27
 			$Attack2/CollisionShape2D2.position.x = 27
 		
@@ -52,7 +50,7 @@ func _on_Attacking_body_entered(body):
 
 func _on_Attack_timeout():
 	$Attack2/CollisionShape2D2.disabled = true
-	$AnimatedSprite.set_animation("idle")
+	$Sprite.set_animation("idle")
 
 func _on_AttackCooldown_timeout():
 	cooldown = true

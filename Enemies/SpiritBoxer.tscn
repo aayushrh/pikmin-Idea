@@ -219,7 +219,7 @@ frames = SubResource( 105 )
 animation = "idle"
 frame = 2
 playing = true
-flip_h = true
+offset = Vector2( 105, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 2 )
