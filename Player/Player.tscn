@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://sprite_sheet.png" type="Texture" id=2]
@@ -161,6 +161,40 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ false, true ]
+}
+
+[sub_resource type="Animation" id=46]
+resource_name = "Dash_Left"
+length = 0.45
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 25, 26, 27 ]
+}
+
+[sub_resource type="Animation" id=47]
+resource_name = "Dash_Right"
+length = 0.45
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 30, 31, 32 ]
 }
 
 [sub_resource type="Animation" id=1]
@@ -355,6 +389,18 @@ blend_point_1/pos = 1.0
 blend_point_2/node = SubResource( 45 )
 blend_point_2/pos = -1.0
 
+[sub_resource type="AnimationNodeAnimation" id=48]
+animation = "Dash_Left"
+
+[sub_resource type="AnimationNodeAnimation" id=49]
+animation = "Dash_Right"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id=50]
+blend_point_0/node = SubResource( 48 )
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource( 49 )
+blend_point_1/pos = 1.0
+
 [sub_resource type="AnimationNodeAnimation" id=10]
 animation = "Idle_Up"
 
@@ -400,14 +446,22 @@ switch_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id=44]
 switch_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=51]
+switch_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=52]
+switch_mode = 2
+
 [sub_resource type="AnimationNodeStateMachine" id=21]
 states/Attack/node = SubResource( 37 )
-states/Attack/position = Vector2( 269.4, 153.812 )
+states/Attack/position = Vector2( 70.9, 74.656 )
+states/Dash/node = SubResource( 50 )
+states/Dash/position = Vector2( 553.67, 74.1723 )
 states/Idle/node = SubResource( 14 )
 states/Idle/position = Vector2( 224.5, 74 )
 states/Run/node = SubResource( 42 )
 states/Run/position = Vector2( 388.17, 73.3112 )
-transitions = [ "Idle", "Attack", SubResource( 38 ), "Attack", "Idle", SubResource( 39 ), "Idle", "Run", SubResource( 43 ), "Run", "Idle", SubResource( 44 ) ]
+transitions = [ "Idle", "Attack", SubResource( 38 ), "Attack", "Idle", SubResource( 39 ), "Idle", "Run", SubResource( 43 ), "Run", "Idle", SubResource( 44 ), "Dash", "Run", SubResource( 51 ), "Run", "Dash", SubResource( 52 ) ]
 start_node = "Idle"
 graph_offset = Vector2( -90.3298, 17.1225 )
 
@@ -439,6 +493,8 @@ anims/Attack_Down = SubResource( 24 )
 anims/Attack_Left = SubResource( 27 )
 anims/Attack_Right = SubResource( 26 )
 anims/Attack_Up = SubResource( 25 )
+anims/Dash_Left = SubResource( 46 )
+anims/Dash_Right = SubResource( 47 )
 anims/Idle_Down = SubResource( 1 )
 anims/Idle_Left = SubResource( 2 )
 anims/Idle_Right = SubResource( 3 )
@@ -454,6 +510,7 @@ tree_root = SubResource( 21 )
 anim_player = NodePath("../AnimationPlayer")
 parameters/playback = SubResource( 22 )
 parameters/Attack/blend_position = Vector2( 0, -1 )
+parameters/Dash/blend_position = 0
 parameters/Idle/blend_position = Vector2( -1, 0 )
 parameters/Run/blend_position = Vector2( 0, 0 )
 
