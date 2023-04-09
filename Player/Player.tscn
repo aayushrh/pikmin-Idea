@@ -401,26 +401,26 @@ blend_point_0/pos = -1.0
 blend_point_1/node = SubResource( 49 )
 blend_point_1/pos = 1.0
 
-[sub_resource type="AnimationNodeAnimation" id=10]
+[sub_resource type="AnimationNodeAnimation" id=54]
 animation = "Idle_Up"
 
-[sub_resource type="AnimationNodeAnimation" id=11]
+[sub_resource type="AnimationNodeAnimation" id=55]
 animation = "Idle_Down"
 
-[sub_resource type="AnimationNodeAnimation" id=12]
+[sub_resource type="AnimationNodeAnimation" id=56]
 animation = "Idle_Left"
 
-[sub_resource type="AnimationNodeAnimation" id=13]
+[sub_resource type="AnimationNodeAnimation" id=57]
 animation = "Idle_Right"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id=14]
-blend_point_0/node = SubResource( 10 )
+blend_point_0/node = SubResource( 54 )
 blend_point_0/pos = Vector2( 0, -1 )
-blend_point_1/node = SubResource( 11 )
+blend_point_1/node = SubResource( 55 )
 blend_point_1/pos = Vector2( 0, 1 )
-blend_point_2/node = SubResource( 12 )
+blend_point_2/node = SubResource( 56 )
 blend_point_2/pos = Vector2( -1, 0 )
-blend_point_3/node = SubResource( 13 )
+blend_point_3/node = SubResource( 57 )
 blend_point_3/pos = Vector2( 1, 0 )
 
 [sub_resource type="AnimationNodeAnimation" id=40]
