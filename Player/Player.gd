@@ -7,7 +7,7 @@ export(float) var FRICTION = 0.9
 export(int) var MAX_SPEED = 1000
 export(int) var DASH_SPEED = 2000
 export(float) var DASH_TIME = 1.5
-export(float) var DASH_COOLDOWN = 1
+export(float) var COYOTE_TIME = 1
 export(int) var GRAVITY = 9
 export(int) var JUMP = 350
 
@@ -65,7 +65,6 @@ func _move(delta):
 		playerState = "Dash"
 		can_dash = false
 		$DashTimer.start(DASH_TIME/100)
-		$DashCooldown.start(DASH_COOLDOWN)
 	
 	if (abs(velocity.y) <= 0.1):
 		can_dash = true
@@ -108,6 +107,8 @@ func _on_DashTimer_timeout():
 
 func take_damage(num):
 	print(num)
+func _on_CoyoteTime_timeout():
+	pass
 
 func _on_SwordTimer_timeout():
 	playerState = "Move"
