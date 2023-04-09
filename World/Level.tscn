@@ -12,7 +12,7 @@
 script = ExtResource( 6 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 544, -920 )
+position = Vector2( 113, -29 )
 ACCELERATION = 1000
 MAX_SPEED = 100
 DASH_SPEED = 1000
@@ -34,7 +34,7 @@ cell_size = Vector2( 16, 16 )
 format = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 545, -918 )
+position = Vector2( 114, -27 )
 rotating = true
 current = true
 zoom = Vector2( 2, 2 )

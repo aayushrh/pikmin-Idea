@@ -111,7 +111,7 @@ func _on_DashTimer_timeout():
 func take_damage(num):
 	health -= num
 	if(health <= 0):
-		queue_free()
+		SceneChanger.change_scene_to("res://StartScreen.tscn")
 	print(health)
 	
 func _on_CoyoteTime_timeout():
