@@ -11,8 +11,12 @@ config_version=4
 [application]
 
 config/name="Pikmin Remake"
-run/main_scene="res://World/Level.tscn"
+run/main_scene="res://StartScreen.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+SceneChanger="*res://SceneChanger.tscn"
 
 [display]
 

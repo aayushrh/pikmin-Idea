@@ -27,6 +27,7 @@ onready var state = aTree["parameters/playback"]
 
 func _ready():
 	aTree.active = true
+	$Pivot/Hitbox/CollisionShape2D.disabled = true
 
 func _process(delta):
 	if(Input.is_action_just_pressed("shoot")):
@@ -111,8 +112,8 @@ func _on_DashTimer_timeout():
 func take_damage(num):
 	health -= num
 	if(health <= 0):
-		queue_free()
-	print(health)
+		# game over
+		SceneChanger.change_scene_to("res://StartScreen.tscn")
 	
 func _on_CoyoteTime_timeout():
 	pass
