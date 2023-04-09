@@ -106,6 +106,8 @@ func _dash(delta):
 func _on_DashTimer_timeout():
 	playerState = "Move"
 
+func take_damage(num):
+	print(num)
 
 func _on_SwordTimer_timeout():
 	playerState = "Move"
