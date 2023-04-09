@@ -29,7 +29,6 @@ ACCELERATION = 1000
 MAX_SPEED = 100
 DASH_SPEED = 700
 DASH_TIME = 10.0
-DASH_COOLDOWN = 0.45
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
 remote_path = NodePath("../../Camera2D")
