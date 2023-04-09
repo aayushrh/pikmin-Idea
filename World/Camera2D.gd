@@ -18,4 +18,10 @@ func _process(_delta):
 
 # sync camera's zoom to the zoom_level
 func update_zoom():
+	# Cap zoom level
+	if zoom_level < 0.1:
+		zoom_level = .25
+	if zoom_level > 4:
+		zoom_level = 4
+
 	set_zoom(Vector2(zoom_level, zoom_level))

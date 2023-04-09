@@ -28,7 +28,7 @@ func _process(delta):
 		var vector = get_global_mouse_position() - global_position
 		vector = vector.normalized()
 		var bullet = Bullet.instance()
-		bullet.global_position = global_position
+		bullet.global_position = global_position + Vector2(0, 4)
 		bullet.direction = vector
 		get_tree().current_scene.add_child(bullet)
 	if(playerState == "Move"):
@@ -44,12 +44,20 @@ func _attack():
 func _move(delta):
 	var vector = get_global_mouse_position() - global_position
 	vector = vector.normalized()
-	aTree.set("parameters/Attack/blend_position", vector)
+	var dir = 0
+	if (vector.x >= 0):
+		dir = 1
+	else:
+		dir = -1
+	aTree.set("parameters/Attack/blend_position", dir)
 	
 	if(Input.is_action_just_pressed("attack")):
 		state.travel("Attack")
 		playerState = "Attack"
-		$SwordTimer.start(0.6)
+		#var timer = Timer.new()
+		#timer.connect("timeout", self, "_on_SwordTimer_timeout")
+		#timer.start(0.6)
+		$SwordTimer.start(0.5)
 	
 	if(Input.is_action_just_pressed("dash") and can_dash):
 		playerState = "Dash"
@@ -65,7 +73,8 @@ func _move(delta):
 	if(input_vector != Vector2.ZERO):
 		state.travel("Run")
 		aTree.set("parameters/Idle/blend_position", input_vector)
-		aTree.set("parameters/Run/blend_position", input_vector)
+		aTree.set("parameters/Run/blend_position", input_vector.x)
+		aTree.set("parameters/Dash/blend_position", input_vector.x)
 		velocity += input_vector * ACCELERATION * delta
 		velocity.clamped(MAX_SPEED)
 	else:
@@ -75,6 +84,7 @@ func _move(delta):
 	velocity = move_and_slide(velocity)
 
 func _dash(delta):
+	state.travel("Dash")
 	var input_vector = velocity.normalized()
 	input_vector *= DASH_SPEED * 100
 	move_and_slide(input_vector * delta)
