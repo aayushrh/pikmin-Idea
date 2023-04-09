@@ -62,3 +62,6 @@ func _on_Attacking_body_exited(body):
 
 func _on_Attack2_body_entered(body):
 	body.take_damage(10)
+
+func _on_Hurtbox_area_entered(area):
+	queue_free()
