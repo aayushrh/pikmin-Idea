@@ -11,6 +11,8 @@ export(float) var DASH_COOLDOWN = 1
 
 var can_dash = true
 
+var speedMult = 1
+
 var playerState = "Move"
 
 onready var Bullet = preload("res://Player//Bullet.tscn")
@@ -77,6 +79,7 @@ func _move(delta):
 		aTree.set("parameters/Dash/blend_position", input_vector.x)
 		velocity += input_vector * ACCELERATION * delta
 		velocity.clamped(MAX_SPEED)
+		velocity *= speedMult
 	else:
 		state.travel("Idle")
 	velocity *= FRICTION
