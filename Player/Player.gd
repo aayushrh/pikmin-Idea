@@ -10,12 +10,15 @@ export(float) var DASH_TIME = 1.5
 export(float) var COYOTE_TIME = 1
 export(int) var GRAVITY = 9
 export(int) var JUMP = 350
+export(int) var INITIAL_HEALTH = 100
 
 var can_dash = true
 
 var speedMult = 1
 
 var playerState = "Move"
+
+var health = INITIAL_HEALTH
 
 onready var Bullet = preload("res://Player//Bullet.tscn")
 
@@ -106,7 +109,11 @@ func _on_DashTimer_timeout():
 	playerState = "Move"
 
 func take_damage(num):
-	print(num)
+	health -= num
+	if(health <= 0):
+		queue_free()
+	print(health)
+	
 func _on_CoyoteTime_timeout():
 	pass
 
